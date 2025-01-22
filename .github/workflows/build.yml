@@ -1,0 +1,39 @@
+name: Build MyTest App
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 12 * * 1" # Automatyczne uruchomienie w poniedziałki o 12:00 UTC
+  workflow_dispatch: # Ręczne uruchomienie przez użytkownika
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.x"
+
+    - name: Install dependencies
+      run: |
+        pip install pyqt5 pyinstaller pytest
+
+    - name: Run tests
+      run: pytest test_mytest.py
+
+    - name: Build executable
+      run: pyinstaller --onefile --noconsole mytest_ui.py
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: MyTestApp
+        path: dist/mytest_ui.exe
+
