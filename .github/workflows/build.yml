@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 12 * * 1" # Automatyczne uruchomienie w poniedziałki o 12:00 UTC
+    - cron: "0 12 * * 3" # Automatyczne uruchomienie w poniedziałki o 12:00 UTC
   workflow_dispatch: # Ręczne uruchomienie przez użytkownika
 
 jobs:
